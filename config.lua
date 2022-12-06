@@ -6,6 +6,7 @@ Config.Bandage = 'Bandage'
 Config.Revive = 'Morphine'
 Config.Webhook = 'https://discord.com/api/webhooks/1000202324863627375/vFVEjxm-oQJ31CEdVqoqXEW3X9wWwiD1ZThKOIoM9u4ZSBEBt7_MK9OdIeTLWCZqlOPi'
 Config.Command = 'medic'
+Config.gonegative = 'false
 
 Doctoroffices = {
                 val = {
