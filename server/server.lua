@@ -57,6 +57,7 @@ if not Config.gonegative then
         Character.removeCurrency(0, Config.doctors.amount) -- Remove money 1000 | 0 = money, 1 = gold, 2 = rol
         Wait(3000)
         VorpCore.NotifyRightTip(_source,_U('revived')..Config.doctors.amount,4000)
+        TriggerClientEvent('legacy_medic:revive', _source)
     else
         VorpCore.NotifyRightTip(_source,_U('notenough')..Config.doctors.amount,4000)
     end
