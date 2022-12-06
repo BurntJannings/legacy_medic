@@ -194,7 +194,6 @@ RegisterNetEvent('legacy_medic:getclosestplayerbandage', function ()
 	local closestPlayer, closestDistance = GetClosestPlayer()
 	local closestPlayerPed = GetPlayerPed(closestPlayer)
 	local closestPlayerCoords = GetEntityCoords(closestPlayer, true)
-	print(closestPlayerCoords)
 
 	if closestPlayer ~= -1 and closestDistance <= 3.0 then
 		TriggerServerEvent('legacy_medic:healplayer', GetPlayerServerId(closestPlayer))
@@ -205,7 +204,6 @@ end)
 
 RegisterNetEvent('legacy_medic:sendjob', function (job)
 	Playerjob = job
-	print(Playerjob)
 end)
 
 RegisterCommand(Config.Command, function(source, args)
@@ -313,7 +311,6 @@ function DoctorMenu() -- Base Police Menu Logic
 	local closestPlayer,closestDistance = GetClosestPlayer()
 	local closestPlayerPed = GetPlayerPed(closestPlayer)
 	local patienthealth = GetEntityHealth(closestPlayerPed)
-	print(patienthealth)
 	local patientpulse = patienthealth / 4 + math.random(20,30)
 
 	local closesthit, closestbone = GetPedLastDamageBone(closestPlayerPed)
@@ -444,7 +441,6 @@ end
 
 RegisterNetEvent("legacy_medic:checkpart")
 AddEventHandler("legacy_medic:checkpart", function(bone)
-	print('working')
 		if bone == 21030 then 
 			damageboneself = _U('Head')
 	elseif bone == 6884 or bone == 43312 then
@@ -474,7 +470,6 @@ end)
 
 RegisterNetEvent("legacy_medic:checkpartother")
 AddEventHandler("legacy_medic:checkpartother", function(bone)
-	print('working')
 	if bone == 21030 then 
 		damagebone = _U('Head')
 	elseif bone == 6884 or bone == 43312 then
