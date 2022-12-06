@@ -67,6 +67,7 @@ AddEventHandler("legacy_medic:reviveplayer", function()
     else
         VorpCore.NotifyRightTip(_source,_U('notenough')..Config.doctors.amount,4000)
     end
+    end
 end)
 
 RegisterServerEvent('legacy_medic:reviveclosestplayer')
