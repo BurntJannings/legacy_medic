@@ -37,18 +37,23 @@ Citizen.CreateThread(function()
         for k,v in pairs(Doctoroffices) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
             if distance <= 1.0 then
-
+		if not IsEntityDead(ped) then
                 local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
                 PromptSetActiveGroupThisFrame(PromptGorup, item_name)
-		if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
-			TriggerServerEvent('legacy_medic:checkjob')
-			if CheckTable(MedicJobs,Playerjob) then 
-                    	CabinetMenu()				
-			else
-			VORPcore.NotifyRightTip(_U('you_do_not_have_job'),4000)		
-                	end
+			if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
+				TriggerServerEvent('legacy_medic:checkjob')
+					if CheckTable(MedicJobs,Playerjob) then 
+                    			CabinetMenu()				
+					else
+					VORPcore.NotifyRightTip(_U('you_do_not_have_job'),4000)		
+                			end
+			end
+            	else
+		Wait(500)
 		end
-            end
+		else
+		Wait(500)
+		end
         end
 	end
 end)
