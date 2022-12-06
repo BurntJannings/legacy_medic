@@ -11,6 +11,7 @@ RegisterServerEvent('legacy_medic:checkjob', function()
     local _source = source
     local Character = VorpCore.getUser(_source).getUsedCharacter
     local job = Character.job
+        Wait(5000)
     TriggerClientEvent('legacy_medic:sendjob',_source, job)
 end)
 
