@@ -16,7 +16,6 @@ end)
 local PromptGorup = GetRandomIntInRange(0, 0xffffff)
 
 function SetupUsePrompt()
-    Citizen.CreateThread(function()
         local str = 'Use'
         UsePrompt = PromptRegisterBegin()
         PromptSetControlAction(UsePrompt, 0xC7B5340A)
@@ -27,7 +26,6 @@ function SetupUsePrompt()
         PromptSetHoldMode(UsePrompt, true)
         PromptSetGroup(UsePrompt, PromptGorup)
         PromptRegisterEnd(UsePrompt)
-    end)
 end
 
 Citizen.CreateThread(function()
@@ -45,7 +43,9 @@ Citizen.CreateThread(function()
 		if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
 			TriggerServerEvent('legacy_medic:checkjob')
 			if CheckTable(MedicJobs,Playerjob) then 
-                    	CabinetMenu()
+                    	CabinetMenu()				
+			else
+			VORPcore.NotifyRightTip(_U('you_do_not_have_job'),4000)		
                 	end
 		end
             end
