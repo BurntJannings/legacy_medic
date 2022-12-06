@@ -42,6 +42,7 @@ Citizen.CreateThread(function()
                 PromptSetActiveGroupThisFrame(PromptGorup, item_name)
 			if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
 				TriggerServerEvent('legacy_medic:checkjob')
+				  Wait(2000)
 					if CheckTable(MedicJobs,Playerjob) then 
                     			CabinetMenu()				
 					else
