@@ -138,7 +138,6 @@ function SpawnNPC()
                     Citizen.InvokeNative(0x923583741DC87BCE, createdped, "default")
                     TaskGoToEntity(createdped, ped, -1, 2.0, 5.0, 1073741824, 1)
                     Wait(0)
-		TriggerServerEvent('legacy_medic:reviveplayer', source)
                     while createdped do 
                         local pcoords = GetEntityCoords(PlayerPedId())
                         local tcoords = GetEntityCoords(createdped)
@@ -148,7 +147,7 @@ function SpawnNPC()
                             if createdped then 
                             Wait(5000)
                             DeleteEntity(createdped)
-				TriggerEvent('legacy_medic:revive', _source)
+			TriggerServerEvent('legacy_medic:reviveplayer', source)
                             end
                         end
 
