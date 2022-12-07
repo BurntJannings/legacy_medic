@@ -31,7 +31,6 @@ function SetupUsePrompt()
 end
 
 Citizen.CreateThread(function()
-	SetupUsePrompt()
 	while true do
 		Wait(0)
 		local ped = PlayerPedId()
@@ -39,7 +38,8 @@ Citizen.CreateThread(function()
 		local isDead = IsEntityDead(ped)
         for k,v in pairs(Doctoroffices) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
-            if distance <= 1.5 and not isDead and not inmenu then
+            if distance <= 2.0 and not isDead and not inmenu then
+				SetupUsePrompt()
                 		local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
                 		PromptSetActiveGroupThisFrame(PromptGorup, item_name)
 						if IsControlPressed(0,0xC7B5340A) then
