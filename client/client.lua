@@ -6,7 +6,9 @@ local damageboneself = _U('None')
 local Playerjob
 local amount 
 local close
+local inmenu = false
 local VORPcore = {}
+
 
 TriggerEvent("getCore", function(core)
     VORPcore = core
@@ -34,27 +36,23 @@ Citizen.CreateThread(function()
 		Wait(0)
 		local ped = PlayerPedId()
         local pedpos = GetEntityCoords(PlayerPedId(), true)
+		local isDead = IsEntityDead(ped)
         for k,v in pairs(Doctoroffices) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
-            if distance <= 1.0 then
-		if not IsEntityDead(ped) then
-                local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
-                PromptSetActiveGroupThisFrame(PromptGorup, item_name)
-			if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
-				TriggerServerEvent('legacy_medic:checkjob')
-				  Wait(2000)
-					if CheckTable(MedicJobs,Playerjob) then 
-                    			CabinetMenu()				
-					else
-					VORPcore.NotifyRightTip(_U('you_do_not_have_job'),4000)		
-                			end
+            if distance <= 1.5 and not isDead and not inmenu then
+                		local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
+                		PromptSetActiveGroupThisFrame(PromptGorup, item_name)
+						if IsControlPressed(0,0xC7B5340A) then
+						TriggerServerEvent('legacy_medic:checkjob')
+				 		 Wait(2000)
+							if CheckTable(MedicJobs,Playerjob) then 
+                    			CabinetMenu()		
+								inmenu = true		
+								else
+								VORPcore.NotifyRightTip(_U('you_do_not_have_job'),4000)		
+                				end
+							end
 			end
-            	else
-		Wait(500)
-		end
-		else
-		Wait(500)
-		end
         end
 	end
 end)
@@ -78,7 +76,7 @@ function RevivePlayer(playerPed)
         ClearPedTasksImmediately(PlayerPedId())
         TriggerServerEvent('legacy_medic:reviveclosestplayer', GetPlayerServerId(playerPed))
     else
-		VORPcore.NotifyRightTip(_U('player_not_unconscious'),4000)
+	  VORPcore.NotifyRightTip(_U('player_not_unconscious'),4000)
     end
 end
 
@@ -92,13 +90,11 @@ function SpawnNPC()
 					while not HasModelLoaded(model) or HasModelLoaded(model) == 0 or model == 1 do
 						Citizen.Wait(1) 
 					end
-    for k, v in pairs(Config.doctors) do
-
   	local coords = GetEntityCoords(PlayerPedId())
         local randomAngle = math.rad(math.random(0, 360))
-        local x = coords.x + math.sin(randomAngle) * math.random(1, 100) * 0.5
-        local y = coords.y + math.cos(randomAngle) * math.random(1, 100) * 0.5 -- End Number multiplied by is radius to player
-        local z = coords.z
+         x = coords.x + math.sin(randomAngle) * math.random(1, 100) * 0.5
+         y = coords.y + math.cos(randomAngle) * math.random(1, 100) * 0.5 -- End Number multiplied by is radius to player
+         z = coords.z
         local b, rdcoords, rdcoords2 = GetClosestVehicleNode(coords.x, coords.y, coords.z, 1, 10.0, 10.0)
         if (rdcoords.x == 0.0 and rdcoords.y == 0.0 and rdcoords.z == 0.0) then
             local valid, outPosition = GetSafeCoordForPed(x, y, z, false, 8)
@@ -108,11 +104,6 @@ function SpawnNPC()
                 z = outPosition.z
             end
         else
-            local inwater = Citizen.InvokeNative(0x43C851690662113D, createdped, 100)
-            if inwater then
-             DeleteEntity(createdped)
-             VORPcore.NotifyRightTip(_U('inwater'),4000)
-            end
             local valid, outPosition = GetSafeCoordForPed(x, y, z, false, 16)
             if valid then
                 x = outPosition.x
@@ -126,16 +117,13 @@ function SpawnNPC()
             else
                 VORPcore.NotifyRightTip(_U('missground'),4000)
                 DeleteEntity(createdped)
+				createdped = 0
             end
         end
-
+	end
 					if createdped == 0 then
 						createdped = CreatePed(model, x+2.0, y, z ,true, true, true, true)
 						Wait(500)
-                    else
-                        DeleteEntity(createdped)
-                        VORPcore.NotifyRightTip(_U('doctordied'),4000)
-                        createdped = 0
 					end
 
 					Citizen.InvokeNative(0x283978A15512B2FE, createdped, true) 
@@ -145,21 +133,21 @@ function SpawnNPC()
                     Citizen.InvokeNative(0x923583741DC87BCE, createdped, "default")
                     TaskGoToEntity(createdped, ped, -1, 2.0, 5.0, 1073741824, 1)
                     Wait(0)
-                    while createdped do 
-                        local pcoords = GetEntityCoords(PlayerPedId())
-                        local tcoords = GetEntityCoords(createdped)
-                        local distance = Vdist2(pcoords.x,pcoords.y,pcoords.z,tcoords.x,tcoords.y,tcoords.z)
-                        Wait(0)
-                        if distance < 5 then       
-                            if createdped then 
-                            Wait(5000)
-                            DeleteEntity(createdped)
-			TriggerServerEvent('legacy_medic:reviveplayer', source)
-                            end
-                        end
 
-                    end
-    end
+	while createdped do 
+		local pcoords = GetEntityCoords(PlayerPedId())
+		local tcoords = GetEntityCoords(createdped)
+		local distance = Vdist2(pcoords.x,pcoords.y,pcoords.z,tcoords.x,tcoords.y,tcoords.z)
+		Wait(0)
+		if distance < 5 then  
+			if createdped then 
+			Wait(5000)
+			DeleteEntity(createdped)
+			TriggerEvent('legacy_medic:revive', _source)
+			end
+		end
+
+	end
 end
 
 RegisterNetEvent('legacy_medic:finddoc')
@@ -442,6 +430,7 @@ function CabinetMenu() -- Base Police Menu Logic
 	end,
 
 	function(data, menu)
+		inmenu = false
 		menu.close()
 	end)
 end
@@ -506,6 +495,8 @@ end)
 
 RegisterNetEvent("legacy_medic:revive")
 AddEventHandler("legacy_medic:revive", function()
+	TriggerServerEvent('legacy_medic:reviveplayer')     
+
     TriggerEvent('vorp:resurrectPlayer', source)
 end)
 
