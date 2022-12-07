@@ -25,12 +25,14 @@ function SetupUsePrompt()
         PromptSetText(UsePrompt, str)
         PromptSetEnabled(UsePrompt, true)
         PromptSetVisible(UsePrompt, true)
-        PromptSetHoldMode(UsePrompt, true)
+	PromptSetStandardMode(UsePrompt, 1)
         PromptSetGroup(UsePrompt, PromptGorup)
+	Citizen.InvokeNative(0xC5F428EE08FA7F2C, UsePrompt, true)
         PromptRegisterEnd(UsePrompt)
 end
 
 Citizen.CreateThread(function()
+	SetupUsePrompt()
 	while true do
 		Wait(0)
 		local ped = PlayerPedId()
@@ -39,10 +41,9 @@ Citizen.CreateThread(function()
         for k,v in pairs(Doctoroffices) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
             if distance < 3.5 and not isDead and not inmenu then
-				SetupUsePrompt()
                 		local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
                 		PromptSetActiveGroupThisFrame(PromptGorup, item_name)
-						if IsControlPressed(0,0xC7B5340A) then
+				if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
 						TriggerServerEvent('legacy_medic:checkjob')
 				 		 Wait(2000)
 							if CheckTable(MedicJobs,Playerjob) then 
