@@ -2,11 +2,11 @@ Config = {}
 
 Config.Locale = 'en'
 
-Config.Bandage = 'Bandage'
-Config.Revive = 'Morphine'
+Config.Bandage = 'Bandage'  --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
+Config.Revive = 'Morphine' --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
 Config.Webhook = 'https://discord.com/api/webhooks/1000202324863627375/vFVEjxm-oQJ31CEdVqoqXEW3X9wWwiD1ZThKOIoM9u4ZSBEBt7_MK9OdIeTLWCZqlOPi'
-Config.Command = 'medic'
-Config.gonegative = 'false'
+Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
+Config.gonegative = 'false' -- Can you go negative paying for NPC revival
 
 Doctoroffices = {
                 val = {
@@ -23,30 +23,20 @@ Doctoroffices = {
                 },
     }
 
-Npcs = {
-        val = {
-            model = "mp_u_m_m_nat_farmer_01",
-            Pos = {x = -765.25, y = -1258.38, z = 43.5, h = 355.3}, -- location 
-                    --[[ jobs = {"police","doctor","marshal"},
-            pay = 0.2, ]] -- work in progress
-        },
-        
-    }
-
 MedicJobs = {
-    "doctor"
+    "doctor" -- Jobs that count as Doctors in order to use advanced medical options
 }
 
 
 Config.doctors = {
     ped = 
-    "mp_u_m_m_nat_farmer_01",
+    "mp_u_m_m_nat_farmer_01", -- Model of NPC Doctor
 
-    command = "sendhelp",
+    command = "sendhelp", -- Command to Call for NPC Doctor
 
-    amount = 45,
+    amount = 45, -- Payment for Revive from NPC Doctor
 
-    job = { "doctor" }
+    job = { "doctor" } -- Job that if found will count as Doctor job, notifying player a doc is available
 }
 
 
