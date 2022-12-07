@@ -30,8 +30,14 @@ MedicJobs = {
 
 Config.doctors = {
     ped = 
-    "mp_u_m_m_nat_farmer_01", -- Model of NPC Doctor
+    "mp_u_m_m_nat_farmer_01", -- Model of NPC Doctor or choose other ped model below
 
+  			--am_valentinedoctors_females_01
+			--cs_sddoctor_01
+			--cs_creoledoctor
+			--u_m_m_rhddoctor_01
+			--u_m_m_valdoctor_01
+  
     command = "sendhelp", -- Command to Call for NPC Doctor
 
     amount = 45, -- Payment for Revive from NPC Doctor
