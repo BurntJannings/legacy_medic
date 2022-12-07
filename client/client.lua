@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
 		local isDead = IsEntityDead(ped)
         for k,v in pairs(Doctoroffices) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
-            if distance <= 2.0 and not isDead and not inmenu then
+            if distance < 3.5 and not isDead and not inmenu then
 				SetupUsePrompt()
                 		local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
                 		PromptSetActiveGroupThisFrame(PromptGorup, item_name)
@@ -90,10 +90,11 @@ function SpawnNPC()
 					while not HasModelLoaded(model) or HasModelLoaded(model) == 0 or model == 1 do
 						Citizen.Wait(1) 
 					end
+
   	local coords = GetEntityCoords(PlayerPedId())
         local randomAngle = math.rad(math.random(0, 360))
-         x = coords.x + math.sin(randomAngle) * math.random(1, 100) * 0.5
-         y = coords.y + math.cos(randomAngle) * math.random(1, 100) * 0.5 -- End Number multiplied by is radius to player
+         x = coords.x + math.sin(randomAngle) * math.random(1, 100) * 0.3
+         y = coords.y + math.cos(randomAngle) * math.random(1, 100) * 0.3 -- End Number multiplied by is radius to player
          z = coords.z
         local b, rdcoords, rdcoords2 = GetClosestVehicleNode(coords.x, coords.y, coords.z, 1, 10.0, 10.0)
         if (rdcoords.x == 0.0 and rdcoords.y == 0.0 and rdcoords.z == 0.0) then
@@ -120,7 +121,7 @@ function SpawnNPC()
 				createdped = 0
             end
         end
-	end
+	
 					if createdped == 0 then
 						createdped = CreatePed(model, x+2.0, y, z ,true, true, true, true)
 						Wait(500)
@@ -132,22 +133,11 @@ function SpawnNPC()
                     FreezeEntityPosition(createdped, false)
                     Citizen.InvokeNative(0x923583741DC87BCE, createdped, "default")
                     TaskGoToEntity(createdped, ped, -1, 2.0, 5.0, 1073741824, 1)
-                    Wait(0)
+					Wait(7000)
+					DeleteEntity(createdped)
+					createdped = 0
+					TriggerEvent('legacy_medic:revive', source)
 
-	while createdped do 
-		local pcoords = GetEntityCoords(PlayerPedId())
-		local tcoords = GetEntityCoords(createdped)
-		local distance = Vdist2(pcoords.x,pcoords.y,pcoords.z,tcoords.x,tcoords.y,tcoords.z)
-		Wait(0)
-		if distance < 5 then  
-			if createdped then 
-			Wait(5000)
-			DeleteEntity(createdped)
-			TriggerEvent('legacy_medic:revive', _source)
-			end
-		end
-
-	end
 end
 
 RegisterNetEvent('legacy_medic:finddoc')
@@ -496,7 +486,6 @@ end)
 RegisterNetEvent("legacy_medic:revive")
 AddEventHandler("legacy_medic:revive", function()
 	TriggerServerEvent('legacy_medic:reviveplayer')     
-
     TriggerEvent('vorp:resurrectPlayer', source)
 end)
 
