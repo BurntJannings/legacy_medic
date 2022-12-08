@@ -137,6 +137,7 @@ function SpawnNPC()
 					Wait(7000)
 					DeleteEntity(createdped)
 					createdped = 0
+				TriggerServerEvent('legacy_medic:reviveplayer')     
 					TriggerEvent('legacy_medic:revive', source)
 
 end
@@ -486,7 +487,6 @@ end)
 
 RegisterNetEvent("legacy_medic:revive")
 AddEventHandler("legacy_medic:revive", function()
-	TriggerServerEvent('legacy_medic:reviveplayer')     
     TriggerEvent('vorp:resurrectPlayer', source)
 end)
 
