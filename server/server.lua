@@ -25,9 +25,17 @@ AddEventHandler("legacy_medic:getalljob", function()
 
 
           if CheckTable(Config.doctors.job, used.job) then
+                    if Config.synsociety then
+                    local duty = exports["syn_society"]:IsPlayerOnDuty(_source,used.job)
+                    if duty then
+                        docs = docs + 1
+                        print(duty)
+                    else
+                        print(duty)
+                    end
+                else
               docs = docs + 1
-
-            end
+                end
     end 
 
     if docs == 0 then
