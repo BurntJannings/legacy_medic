@@ -60,7 +60,7 @@ end)
 
 Citizen.CreateThread(function()
     for k,v in pairs(Doctoroffices) do
-        local blip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.x, v.y, v.z)
+        local blip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.Pos.x, v.Pos.y, v.Pos.z)
         SetBlipSprite(blip, -695368421, 1)
         Citizen.InvokeNative(0x9CB1A1623062F402, blip, _U('Map_Blip'))
     end
