@@ -22,21 +22,20 @@ AddEventHandler("legacy_medic:getalljob", function()
     for z, m in ipairs(GetPlayers()) do
         local User = VorpCore.getUser(m)
         local used = User.getUsedCharacter
-
-
           if CheckTable(Config.doctors.job, used.job) then
                     if Config.synsociety then
                     local duty = exports["syn_society"]:IsPlayerOnDuty(_source,used.job)
-                    if duty then
+                        if duty then
                         docs = docs + 1
                         print(duty)
-                    else
+                        else
                         print(duty)
+                        end
+                    else
+                    docs = docs + 1
                     end
-                else
-              docs = docs + 1
-                end
-    end 
+            end 
+        end
 
     if docs == 0 then
       TriggerClientEvent('legacy_medic:finddoc', _source)
