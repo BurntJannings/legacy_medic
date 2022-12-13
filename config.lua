@@ -6,7 +6,8 @@ Config.Bandage = 'Bandage'  --Can change to an equivalent item in your database 
 Config.Revive = 'Morphine' --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
 Config.Webhook = 'https://discord.com/api/webhooks/1000202324863627375/vFVEjxm-oQJ31CEdVqoqXEW3X9wWwiD1ZThKOIoM9u4ZSBEBt7_MK9OdIeTLWCZqlOPi'
 Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
-Config.gonegative = 'false' -- Can you go negative paying for NPC revival
+Config.gonegative = false -- Can you go negative paying for NPC revival
+Config.synsociety = false
 
 Doctoroffices = {
                 val = {
