@@ -82,7 +82,7 @@ function RevivePlayer(playerPed)
 end
 
 function SpawnNPC()
-
+	TriggerServerEvent('legacy_calleAI')
 	local model = GetHashKey(Config.doctors.ped)
 					RequestModel(model)
 					if not HasModelLoaded(model) then 
