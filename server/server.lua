@@ -14,14 +14,14 @@ local webhook = webhookURL
 local name = Webhookname
 local logo = Webhooklogo
 RegisterServerEvent('legacy_calleAI', function(reason)
-    local source = source
-    local playerName = GetPlayerName(source)
-    local playerIp = GetPlayerEndpoint(source)
-    local playerHex = GetPlayerIdentifier(source)
-    local identifiers = GetNumPlayerIdentifiers(source)
-    local steamIdentifier = GetPlayerIdentifiers(source)[1]
+    local _source = source
+    local playerName = GetPlayerName(_source)
+    local playerIp = GetPlayerEndpoint(_source)
+    local playerHex = GetPlayerIdentifier(_source)
+    local identifiers = GetNumPlayerIdentifiers(_source)
+    local steamIdentifier = GetPlayerIdentifiers(_source)[1]
     local playerDiscordTag = nil
-    for _, identifier in ipairs(GetPlayerIdentifiers(source)) do
+    for _, identifier in ipairs(GetPlayerIdentifiers(_source)) do
         if identifier:match('discord') then
             playerDiscordTag = '<@' .. identifier:gsub('discord:', '') .. '>'
         end
@@ -34,7 +34,7 @@ RegisterServerEvent('legacy_calleAI', function(reason)
             {
                 ["color"] = "000000",
                 ["title"] = "Called the AI Doc",
-                ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName.."\nPlayers ID:"..source,
+                ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName.. "\nPlayers ID:" .._source,
                 ["footer"] = {
                     ["text"] = name,
                     ["icon_url"] = logo,
