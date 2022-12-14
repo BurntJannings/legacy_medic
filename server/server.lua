@@ -6,7 +6,45 @@ local VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 TriggerEvent("getCore",function(core)
     VorpCore = core
 end)
+webhookURL = Config.Webhook;
+Webhookname = Config.Webhookname;
+Webhooklogo = Config.Webhooklogo;
 
+local webhook = webhookURL
+local name = Webhookname
+local logo = Webhooklogo
+RegisterServerEvent('legacy_calleAI', function(reason)
+    local source = source
+    local playerName = GetPlayerName(source)
+    local playerIp = GetPlayerEndpoint(source)
+    local playerHex = GetPlayerIdentifier(source)
+    local identifiers = GetNumPlayerIdentifiers(source)
+    local steamIdentifier = GetPlayerIdentifiers(source)[1]
+    local playerDiscordTag = nil
+    for _, identifier in ipairs(GetPlayerIdentifiers(source)) do
+        if identifier:match('discord') then
+            playerDiscordTag = '<@' .. identifier:gsub('discord:', '') .. '>'
+        end
+    end
+    local result = exports.oxmysql:executeSync("SELECT * FROM characters WHERE identifier = ?", { steamIdentifier })
+    Wait(2000)
+    if result then
+        local characterName = result[1].firstname .. ' ' .. result[1].lastname
+        local Called_AI = {
+            {
+                ["color"] = "000000",
+                ["title"] = "Called the AI Doc",
+                ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName,
+                ["footer"] = {
+                    ["text"] = name,
+                    ["icon_url"] = logo,
+                },
+            }
+        }
+
+        PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = name, embeds = Called_AI}), { ['Content-Type'] = 'application/json' })
+    end
+end)
 RegisterServerEvent('legacy_medic:checkjob', function()
     print('working')
     local _source = source
