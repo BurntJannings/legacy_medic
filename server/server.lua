@@ -34,7 +34,7 @@ RegisterServerEvent('legacy_calleAI', function(reason)
             {
                 ["color"] = "000000",
                 ["title"] = "Called the AI Doc",
-                ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName,
+                ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName.."\nPlayers ID:"..source,
                 ["footer"] = {
                     ["text"] = name,
                     ["icon_url"] = logo,
