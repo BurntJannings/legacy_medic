@@ -9,7 +9,7 @@ end)
 
 
 --AI Doc Webhook
-RegisterServerEvent('RSG_calleAI', function(reason)
+RegisterServerEvent('legacy_calleAI', function(reason)
     local _source = source
     local playerName = GetPlayerName(_source)
     local playerIp = GetPlayerEndpoint(_source)
