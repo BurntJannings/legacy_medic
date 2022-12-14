@@ -6,14 +6,10 @@ local VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 TriggerEvent("getCore",function(core)
     VorpCore = core
 end)
-webhookURL = Config.Webhook;
-Webhookname = Config.Webhookname;
-Webhooklogo = Config.Webhooklogo;
 
-local webhook = webhookURL
-local name = Webhookname
-local logo = Webhooklogo
-RegisterServerEvent('legacy_calleAI', function(reason)
+
+--AI Doc Webhook
+RegisterServerEvent('RSG_calleAI', function(reason)
     local _source = source
     local playerName = GetPlayerName(_source)
     local playerIp = GetPlayerEndpoint(_source)
@@ -27,7 +23,6 @@ RegisterServerEvent('legacy_calleAI', function(reason)
         end
     end
     local result = exports.oxmysql:executeSync("SELECT * FROM characters WHERE identifier = ?", { steamIdentifier })
-    Wait(2000)
     if result then
         local characterName = result[1].firstname .. ' ' .. result[1].lastname
         local Called_AI = {
@@ -36,15 +31,16 @@ RegisterServerEvent('legacy_calleAI', function(reason)
                 ["title"] = "Called the AI Doc",
                 ["description"] = "Steam Name: *"..playerName.."*\nPlayer IP: *"..playerIp.."*\nPlayer Steam ID: *"..playerHex.."*\nPlayer's Discord: " .. playerDiscordTag .. "\nPlayer's character name: " .. characterName.. "\nPlayers ID:" .._source,
                 ["footer"] = {
-                    ["text"] = name,
-                    ["icon_url"] = logo,
+                    ["text"] = Config.Webhookname,
+                    ["icon_url"] = Config.Webhooklogo,
                 },
             }
         }
 
-        PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = name, embeds = Called_AI}), { ['Content-Type'] = 'application/json' })
+        PerformHttpRequest(Config.Webhook, function (err, text, headers) end, 'POST', json.encode({username = Config.Webhookname, embeds = Called_AI}), { ['Content-Type'] = 'application/json' })
     end
 end)
+--end og AI webhook log
 RegisterServerEvent('legacy_medic:checkjob', function()
     print('working')
     local _source = source
