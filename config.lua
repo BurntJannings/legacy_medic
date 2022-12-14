@@ -8,7 +8,8 @@ Config.Webhook = 'https://discord.com/api/webhooks/1000202324863627375/vFVEjxm-o
 Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
 Config.gonegative = false -- Can you go negative paying for NPC revival
 Config.synsociety = false
-
+Config.Webhooklogo = "https://i.imgur.com/yourlink.png"
+Config.Webhookname = "AIdoctor Log"
 Doctoroffices = {
                 val = {
                 Pos = {x = -288.72, y = 808.83, z = 119.39}, -- location 
