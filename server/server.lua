@@ -8,7 +8,6 @@ TriggerEvent("getCore",function(core)
 end)
 
 RegisterServerEvent('legacy_medic:checkjob', function()
-    print('working')
     local _source = source
     local Character = VorpCore.getUser(_source).getUsedCharacter
     local job = Character.job
@@ -27,9 +26,7 @@ AddEventHandler("legacy_medic:getalljob", function()
                     local duty = exports["syn_society"]:IsPlayerOnDuty(_source,used.job)
                         if duty then
                         docs = docs + 1
-                        print(duty)
                         else
-                        print(duty)
                         end
                     else
                     docs = docs + 1
@@ -98,7 +95,6 @@ end)
 
 RegisterServerEvent('legacy_medic:healplayer')
 AddEventHandler('legacy_medic:healplayer', function(closestPlayer)
-    print(closestPlayer)
     local _source = source
     local count = VORPInv.getItemCount(_source, Config.Bandage)
     if count > 0 then
