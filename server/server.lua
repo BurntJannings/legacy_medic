@@ -14,35 +14,50 @@ RegisterServerEvent('legacy_medic:checkjob', function()
     TriggerClientEvent('legacy_medic:sendjob',_source, job)
 end)
 
-RegisterServerEvent("legacy_medic:getalljob")
-AddEventHandler("legacy_medic:getalljob", function()
-    local _source = source
-    local docs = 0
-    for z, m in ipairs(GetPlayers()) do
-        local User = VorpCore.getUser(m)
-        local used = User.getUsedCharacter
-          if CheckTable(Config.doctors.job, used.job) then
-                    if Config.synsociety then
-                    local duty = exports["syn_society"]:IsPlayerOnDuty(used,used.job)
-                        if duty then
-                        docs = docs + 1
-                        else
-                        end
-                    else
-                    docs = docs + 1
-                    end
-            end 
-        end
+---@param table table
+---@param job string
+---@return boolean
 
-    if docs == 0 then
-      TriggerClientEvent('legacy_medic:finddoc', _source)
-
+local CheckPlayer = function(table, job)
+    
+    for _, jobholder in pairs (table) do
+    local onduty = exports["syn_society"]:IsPlayerOnDuty(jobholder,job)
+    return onduty
     end
 
-    if docs >= 1 then
-      VorpCore.NotifyRightTip(_source,_U('doctoractive'),4000)
-      end
-end)
+    return false
+end
+
+RegisterServerEvent("legacy_medicalertjobs", function()
+    local _source = source
+    local test = true
+                if Config.synsociety then
+                    if CheckPlayer(stafftable,MedicJobs[1]) or CheckPlayer(stafftable, MedicJobs[2]) then
+                        VorpCore.NotifyRightTip(_source,_U('doctoractive'),4000)
+                    else
+                    TriggerClientEvent('legacy_medic:finddoc', _source)
+                    end
+                else
+                    for z, m in ipairs(GetPlayers()) do
+                        local User = VorpCore.getUser(m)
+                        local used = User.getUsedCharacter
+                          if CheckTable(MedicJobs, used.job) then
+                            TriggerClientEvent('legacy_medic:finddoc', _source)
+                          end
+                    end
+                end
+                      
+     end)
+    
+    RegisterServerEvent("legacy_medic:sendPlayers", function(source)
+        local _source = source
+        local user = VorpCore.getUser(_source).getUsedCharacter
+        local job = user.job -- player job
+    
+        if CheckTable(MedicJobs, job) then
+            stafftable[#stafftable + 1] = _source -- id
+        end
+    end)
 
 RegisterServerEvent('legacy_medic:takeitem', function(item,number)
     local _source = source
