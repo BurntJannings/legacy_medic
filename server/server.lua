@@ -3,6 +3,8 @@ local VORPInv = {}
 
 local VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 
+local stafftable = {}
+
 TriggerEvent("getCore",function(core)
     VorpCore = core
 end)
