@@ -26,7 +26,8 @@ Doctoroffices = {
     }
 
 MedicJobs = {
-    "doctor" -- Jobs that count as Doctors in order to use advanced medical options
+    "doctor", -- Jobs that count as Doctors
+    "police"
 }
 
 
@@ -44,7 +45,6 @@ Config.doctors = {
 
     amount = 45, -- Payment for Revive from NPC Doctor
 
-    job = { "doctor" } -- Job that if found will count as Doctor job, notifying player a doc is available
 }
 
 
