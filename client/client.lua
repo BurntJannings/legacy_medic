@@ -204,7 +204,13 @@ RegisterCommand(Config.Command, function(source, args)
 end)
 
 RegisterCommand(Config.doctors.command,function(source)
-	TriggerServerEvent("legacy_medic:getalljob")		
+	TriggerServerEvent("legacy_medicalertjobs")		
+end)
+
+RegisterNetEvent('vorp:SelectedCharacter', function()
+	local player = GetPlayerServerId(tonumber(PlayerId()))
+	Wait(100)
+	TriggerServerEvent("legacy_medic:sendPlayers", player)
 end)
 
 MenuData = {}
