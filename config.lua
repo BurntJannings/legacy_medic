@@ -45,6 +45,8 @@ Config.doctors = {
 
     amount = 45, -- Payment for Revive from NPC Doctor
 
+    timer = 60000 * 1 -- put how many minutes you'd like ie 60000 * 5 for 5 minutes
+	
 }
 
 
