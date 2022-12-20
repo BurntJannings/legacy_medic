@@ -61,6 +61,16 @@ RegisterServerEvent("legacy_medicalertjobs", function()
         end
     end)
 
+
+AddEventHandler('playerDropped', function()
+        local _source = source        
+        for index, value in pairs (stafftable) do
+            if value == _source then
+            stafftable[index] = nil
+            end
+         end
+    end)
+
 RegisterServerEvent('legacy_medic:takeitem', function(item,number)
     local _source = source
     VORPInv.addItem(_source, item, number) 
