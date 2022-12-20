@@ -211,7 +211,7 @@ RegisterCommand(Config.doctors.command,function(source)
 	Wait(Config.doctors.timer)
 	iscalled = false
 	else
-	VORPcore.NotifyRightTip(_U('cooldown'),4000)
+	VORPcore.NotifyRightTip(_U('cooldown') ..Config.doctors.timer,4000)
 	end
 end)
 
