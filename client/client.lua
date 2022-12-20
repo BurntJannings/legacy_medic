@@ -208,7 +208,7 @@ RegisterCommand(Config.doctors.command,function(source)
 	if not iscalled then
 	TriggerServerEvent("legacy_medicalertjobs")
 	iscalled = true
-	Wait(Config.doctor.timer)
+	Wait(Config.doctors.timer)
 	iscalled = false
 	else
 	VORPcore.NotifyRightTip(_U('cooldown'),4000)
