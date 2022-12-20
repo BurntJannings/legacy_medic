@@ -204,7 +204,15 @@ RegisterCommand(Config.Command, function(source, args)
 end)
 
 RegisterCommand(Config.doctors.command,function(source)
-	TriggerServerEvent("legacy_medicalertjobs")		
+	local iscalled = false
+	if not iscalled then
+	TriggerServerEvent("legacy_medicalertjobs")
+	iscalled = true
+	Wait(Config.doctor.timer)
+	iscalled = false
+	else
+	VORPcore.NotifyRightTip(_U('cooldown'),4000)
+	end
 end)
 
 RegisterNetEvent('vorp:SelectedCharacter', function()
