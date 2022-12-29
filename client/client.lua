@@ -8,6 +8,7 @@ local amount
 local close
 local inmenu = false
 local VORPcore = {}
+local iscalled = false
 
 
 TriggerEvent("getCore", function(core)
@@ -138,7 +139,6 @@ function SpawnNPC()
 					DeleteEntity(createdped)
 					createdped = 0
 				TriggerServerEvent('legacy_medic:reviveplayer')     
-					TriggerEvent('legacy_medic:revive', source)
 
 end
 
@@ -204,14 +204,13 @@ RegisterCommand(Config.Command, function(source, args)
 end)
 
 RegisterCommand(Config.doctors.command,function(source)
-	local iscalled = false
 	if not iscalled then
-	TriggerServerEvent("legacy_medicalertjobs")
 	iscalled = true
+	TriggerServerEvent("legacy_medicalertjobs")
 	Wait(Config.doctors.timer)
 	iscalled = false
 	else
-	VORPcore.NotifyRightTip(_U('cooldown') ..Config.doctors.timer,4000)
+	VORPcore.NotifyRightTip(_U('cooldown'),4000)
 	end
 end)
 
