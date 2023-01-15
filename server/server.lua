@@ -49,10 +49,11 @@ RegisterServerEvent("legacy_medicalertjobs", function()
                 docs = docs + 1
 
             end
-        end
-        if docs < 1 then
+            if docs < 1 then
             TriggerClientEvent('legacy_medic:finddoc', _source)
+            end
         end
+
 
     end
 
