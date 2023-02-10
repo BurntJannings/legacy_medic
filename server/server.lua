@@ -7,6 +7,19 @@ TriggerEvent("getCore", function(core)
     VorpCore = core
 end)
 
+local Needs = {}
+
+TriggerEvent("Outsider_Needs", function(cb) -- to use in server only for security
+    Needs = cb
+end)
+
+local table = {
+    food = 25,
+    water = 25,
+    health = 25,
+}
+
+
 local stafftable = {}
 
 RegisterServerEvent('legacy_medic:checkjob', function()
@@ -50,7 +63,7 @@ RegisterServerEvent("legacy_medicalertjobs", function()
 
             end
             if docs < 1 then
-            TriggerClientEvent('legacy_medic:finddoc', _source)
+                TriggerClientEvent('legacy_medic:finddoc', _source)
             end
         end
 
@@ -96,6 +109,7 @@ AddEventHandler("legacy_medic:reviveplayer", function()
             Character.removeCurrency(0, Config.doctors.amount) -- Remove money 1000 | 0 = money, 1 = gold, 2 = rol
             VorpCore.NotifyRightTip(_source, _U('revived') .. Config.doctors.amount, 4000)
             TriggerClientEvent('legacy_medic:revive', _source)
+            Needs.addStats(_source, table) -- send as a table
         else
             VorpCore.NotifyRightTip(_source, _U('notenough') .. Config.doctors.amount, 4000)
         end
@@ -103,7 +117,7 @@ AddEventHandler("legacy_medic:reviveplayer", function()
         Character.removeCurrency(0, Config.doctors.amount) -- Remove money 1000 | 0 = money, 1 = gold, 2 = rol
         VorpCore.NotifyRightTip(_source, _U('revived') .. Config.doctors.amount, 4000)
         TriggerClientEvent('legacy_medic:revive', _source)
-
+        Needs.addStats(_source, table) -- send as a table
     else
         VorpCore.NotifyRightTip(_source, _U('notenough') .. Config.doctors.amount, 4000)
     end
@@ -121,6 +135,7 @@ AddEventHandler('legacy_medic:reviveclosestplayer', function(closestPlayer)
     if count > 0 then
         VORPInv.subItem(_source, Config.Revive, 1)
         TriggerClientEvent('legacy_medic:revive', closestPlayer)
+        Needs.addStats(_source, table) -- send as a table
         if Config.usewebhook then
             VorpCore.AddWebhook(Config.WebhookTitle, Config.Webhook,
                 _U('Player_Syringe') .. playername .. _U('Used_Syringe') .. playname2)
@@ -137,7 +152,6 @@ AddEventHandler('legacy_medic:healplayer', function(closestPlayer)
     local _source = source
     local count = VORPInv.getItemCount(_source, Config.Bandage)
     if count > 0 then
-        VORPInv.subItem(_source, Config.Bandage, 1)
         TriggerClientEvent('vorp:heal', closestPlayer)
     else
         VorpCore.NotifyRightTip(_source, _U('Missing') .. Config.Bandage, 4000)
@@ -146,6 +160,7 @@ end)
 
 VORPInv.RegisterUsableItem(Config.Revive, function(data)
     TriggerClientEvent('legacy_medic:getclosestplayerrevive', data.source)
+    VORPInv.subItem(data.source, Config.Bandage, 1)
     VorpCore.NotifyRightTip(data.source, "You used " .. Config.Revive, 4000)
 end)
 
