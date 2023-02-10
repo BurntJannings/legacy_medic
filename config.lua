@@ -7,7 +7,7 @@ Config.Revive = 'Morphine' --Can change to an equivalent item in your database o
 Config.usewebhook = false
 Config.Webhook = ''
 Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
-Config.gonegative = false -- Can you go negative paying for NPC revival
+Config.gonegative = true -- Can you go negative paying for NPC revival
 Config.synsociety = false
 
 Doctoroffices = {
@@ -48,5 +48,3 @@ Config.doctors = {
     timer = 60000 * 1 -- put how many minutes you'd like ie 60000 * 5 for 5 minutes
 	
 }
-
-
