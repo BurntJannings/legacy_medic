@@ -159,9 +159,18 @@ AddEventHandler('legacy_medic:healplayer', function(closestPlayer)
 end)
 
 VORPInv.RegisterUsableItem(Config.Revive, function(data)
-    TriggerClientEvent('legacy_medic:getclosestplayerrevive', data.source)
-    VORPInv.subItem(data.source, Config.Bandage, 1)
-    VorpCore.NotifyRightTip(data.source, "You used " .. Config.Revive, 4000)
+    local _source = data.source -- the player that is using the item
+    local user = VORPcore.getUser(_source).getUsedCharacter -- get user 
+    local job = user.job
+    if CheckTable(MedicJobs, job) then
+        TriggerClientEvent('legacy_medic:getclosestplayerrevive', _source)
+        VORPInv.subItem(_source, Config.Revive, 1)
+        VORPcore.NotifyRightTip(_source, "You used " .. Config.Revive, 4000)
+    else
+        VORPcore.NotifyRightTip(_source, "dont have the job", 4000)
+
+    end
+
 end)
 
 VORPInv.RegisterUsableItem(Config.Bandage, function(data)
