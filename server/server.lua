@@ -160,14 +160,14 @@ end)
 
 VORPInv.RegisterUsableItem(Config.Revive, function(data)
     local _source = data.source -- the player that is using the item
-    local user = VORPcore.getUser(_source).getUsedCharacter -- get user 
+    local user = VorpCore.getUser(_source).getUsedCharacter -- get user 
     local job = user.job
     if CheckTable(MedicJobs, job) then
         TriggerClientEvent('legacy_medic:getclosestplayerrevive', _source)
         VORPInv.subItem(_source, Config.Revive, 1)
-        VORPcore.NotifyRightTip(_source, "You used " .. Config.Revive, 4000)
+        VorpCore.NotifyRightTip(_source, "You used " .. Config.Revive, 4000)
     else
-        VORPcore.NotifyRightTip(_source, "dont have the job", 4000)
+        VorpCore.NotifyRightTip(_source, "dont have the job", 4000)
 
     end
 
