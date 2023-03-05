@@ -174,6 +174,7 @@ VORPInv.RegisterUsableItem(Config.Revive, function(data)
 end)
 
 VORPInv.RegisterUsableItem(Config.Bandage, function(data)
+    VORPInv.subItem(data.source, Config.Bandage, 1)
     TriggerClientEvent('legacy_medic:getclosestplayerbandage', data.source)
     VorpCore.NotifyRightTip(data.source, "You used " .. Config.Bandage, 4000)
 end)
