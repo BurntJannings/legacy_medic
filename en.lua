@@ -51,6 +51,8 @@ Locales['en'] = {
     notenough = "You do not have $",
     doctoractive = "A Doctor is available, /alert instead",
     you_do_not_have_job = "You are missing the job needed",
-    cooldown = "Please wait "
+    cooldown = "Please wait ",
+    Youused ="You used",
+
 
 }
