@@ -149,9 +149,9 @@ VORPInv.RegisterUsableItem(Config.Revive, function(data)
     local job = user.job
     if CheckTable(MedicJobs, job) then
         TriggerClientEvent('legacy_medic:getclosestplayerrevive', _source)
-        VorpCore.NotifyRightTip(_source, "You used " .. Config.Revive, 4000)
+    VorpCore.NotifyRightTip(data.source,_U('Youused').. Config.Revive, 4000)
     else
-        VorpCore.NotifyRightTip(_source, "dont have the job", 4000)
+        VorpCore.NotifyRightTip(_source,_U('youdonothavejob'), 4000)
 
     end
 
@@ -159,7 +159,7 @@ end)
 
 VORPInv.RegisterUsableItem(Config.Bandage, function(data)
     TriggerClientEvent('legacy_medic:getclosestplayerbandage', data.source)
-    VorpCore.NotifyRightTip(data.source, "You used " .. Config.Bandage, 4000)
+    VorpCore.NotifyRightTip(data.source,_U('Youused').. Config.Bandage, 4000)
 end)
 
 function CheckTable(table, element)
