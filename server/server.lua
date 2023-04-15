@@ -151,7 +151,7 @@ VORPInv.RegisterUsableItem(Config.Revive, function(data)
         TriggerClientEvent('legacy_medic:getclosestplayerrevive', _source)
     VorpCore.NotifyRightTip(data.source,_U('Youused').. Config.Revive, 4000)
     else
-        VorpCore.NotifyRightTip(_source,_U('youdonothavejob'), 4000)
+        VorpCore.NotifyRightTip(_source,_U('you_do_not_have_job'), 4000)
 
     end
 
