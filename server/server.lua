@@ -39,7 +39,7 @@ RegisterServerEvent("legacy_medicalertjobs", function()
     if Config.synsociety then
         local isanyon = exports["syn_society"]:GetPlayersOnDuty("doctor")
         print(json.encode(isanyon))
-        if #isanyon ~= 0 or #isanyon2 ~= 0 then
+        if #isanyon ~= 0 then
             VorpCore.NotifyRightTip(_source, _U('doctoractive'), 4000)
         else
             TriggerClientEvent('legacy_medic:finddoc', _source)
