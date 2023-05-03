@@ -53,7 +53,7 @@ RegisterServerEvent("legacy_medicalertjobs", function()
             end
         end
         if docs < 1 then
-            TriggerClientEvent('RSG_medic:finddoc', _source)
+            TriggerClientEvent('legacy_medic:finddoc', _source)
         end
     end
 end)
