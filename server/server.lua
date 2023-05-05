@@ -20,7 +20,7 @@ end)
 ---@param table table
 ---@param job string
 ---@return boolean
-
+--[[
 local CheckPlayer = function(table, job)
 
     for _, jobholder in pairs(table) do
@@ -31,12 +31,15 @@ local CheckPlayer = function(table, job)
 
     return false
 end
+]]
 
 RegisterServerEvent("legacy_medicalertjobs", function()
     local _source = source
     local docs = 0
     if Config.synsociety then
-        if CheckPlayer(stafftable, MedicJobs[1]) or CheckPlayer(stafftable, MedicJobs[2]) then
+        local isanyon = exports["syn_society"]:GetPlayersOnDuty("doctor")
+        print(json.encode(isanyon))
+        if #isanyon ~= 0 then
             VorpCore.NotifyRightTip(_source, _U('doctoractive'), 4000)
         else
             TriggerClientEvent('legacy_medic:finddoc', _source)
@@ -47,17 +50,14 @@ RegisterServerEvent("legacy_medicalertjobs", function()
             local used = User.getUsedCharacter
             if CheckTable(MedicJobs, used.job) then
                 docs = docs + 1
-
-            end
-            if docs < 1 then
-                TriggerClientEvent('legacy_medic:finddoc', _source)
             end
         end
-
-
+        if docs < 1 then
+            TriggerClientEvent('legacy_medic:finddoc', _source)
+        end
     end
-
 end)
+
 
 RegisterServerEvent("legacy_medic:sendPlayers", function(source)
     local _source = source
