@@ -33,30 +33,30 @@ function SetupUsePrompt()
 end
 
 Citizen.CreateThread(function()
-	SetupUsePrompt()
-	while true do
-		Wait(0)
-		local ped = PlayerPedId()
-		local pedpos = GetEntityCoords(PlayerPedId(), true)
-		local isDead = IsEntityDead(ped)
-		for k, v in pairs(Doctoroffices) do
-			local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
-			if distance < 1.5 and not isDead and not inmenu then
-				local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
-				PromptSetActiveGroupThisFrame(PromptGorup, item_name)
-				if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
-					TriggerServerEvent('legacy_medic:checkjob')
-					Wait(2000)
-					if CheckTable(MedicJobs, Playerjob) then
-						CabinetMenu()
-						inmenu = true
-					else
-						VORPcore.NotifyRightTip(_U('you_do_not_have_job'), 4000)
-					end
-				end
-			end
-		end
-	end
+    SetupUsePrompt()
+    while true do
+        Wait(0)
+        local ped = PlayerPedId()
+        local pedpos = GetEntityCoords(PlayerPedId(), true)
+        local isDead = IsEntityDead(ped)
+        for k, v in pairs(Doctoroffices) do
+            local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, false)
+            if distance < 1.5 and not isDead and not inmenu then
+                TriggerServerEvent('legacy_medic:checkjob')
+                if CheckTable(MedicJobs, Playerjob) then
+                    local item_name = CreateVarString(10, 'LITERAL_STRING', _U('Open_Cabinet'))
+                    PromptSetActiveGroupThisFrame(PromptGorup, item_name)
+                    if Citizen.InvokeNative(0xC92AC953F0A982AE, UsePrompt) then
+                        CabinetMenu()
+                        inmenu = true
+                        Wait(2000)
+                    else
+                        inmenu = false
+                    end
+          	end
+            end
+        end
+    end
 end)
 
 Citizen.CreateThread(function()
