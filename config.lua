@@ -9,7 +9,7 @@ Config.Webhook = ''
 Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
 Config.gonegative = true -- Can you go negative paying for NPC revival
 Config.synsociety = false
-
+Config.playerscantuseband = true
 Doctoroffices = {
                 val = {
                 Pos = {x = -288.72, y = 808.83, z = 119.39}, -- location 
