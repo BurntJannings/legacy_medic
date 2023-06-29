@@ -192,7 +192,7 @@ AddEventHandler('legacy_medic:getclosestplayerbandage', function()
         else
 
 			VORPcore.NotifyRightTip( _U('not_near_player'), 4000)
-            TriggerServerEvent('legacy_medic:healself')
+            --TriggerServerEvent('legacy_medic:healself') --comment this out only if you dont want players to use the bandage them self 
         end
     else
 
