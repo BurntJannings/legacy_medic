@@ -190,15 +190,19 @@ AddEventHandler('legacy_medic:getclosestplayerbandage', function()
         if closestPlayer ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('legacy_medic:healplayer', GetPlayerServerId(closestPlayer), closestPlayerhealth)
         else
-
+		if Config.playerscantuseband then
 			VORPcore.NotifyRightTip( _U('not_near_player'), 4000)
-            --TriggerServerEvent('legacy_medic:healself') --comment this out only if you dont want players to use the bandage them self 
-        end
+		else
+            TriggerServerEvent('legacy_medic:healself')
+    	end
+	end
     else
+	
 
         VORPcore.NotifyRightTip( _U('cantheal'), 4000)
     end
 end)
+
 
 RegisterNetEvent('legacy_medic:sendjob', function(job)
 	Playerjob = job
