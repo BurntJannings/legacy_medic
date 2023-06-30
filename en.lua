@@ -53,6 +53,8 @@ Locales['en'] = {
     you_do_not_have_job = "You are missing the job needed",
     cooldown = "Please wait ",
     Youused ="You used",
+    cantheal = "Player's health is not low enought",
+
 
 
 }

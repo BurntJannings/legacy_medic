@@ -131,13 +131,31 @@ AddEventHandler('legacy_medic:reviveclosestplayer', function(closestPlayer)
 end)
 
 RegisterServerEvent('legacy_medic:healplayer')
-AddEventHandler('legacy_medic:healplayer', function(closestPlayer)
-    print(closestPlayer)
+AddEventHandler('legacy_medic:healplayer', function(closestPlayer, closestPlayerhealth)
     local _source = source
     local count = VORPInv.getItemCount(_source, Config.Bandage)
+    
+    if closestPlayerhealth < 150 then -- Check if player's health is under 150
+        if count > 0 then
+            VORPInv.subItem(_source, Config.Bandage, 1)
+            TriggerClientEvent('vorp:heal', closestPlayer)
+        else
+            VorpCore.NotifyRightTip(_source, _U('Missing') .. Config.Bandage, 4000)
+        end
+    else
+
+        VorpCore.NotifyRightTip(_source,_U('cantheal') , 4000)
+    end
+end)
+
+RegisterServerEvent('legacy_medic:healself')
+AddEventHandler('legacy_medic:healself', function()
+    local _source = source
+    local count = VORPInv.getItemCount(_source, Config.Bandage)
+    
     if count > 0 then
         VORPInv.subItem(_source, Config.Bandage, 1)
-        TriggerClientEvent('vorp:heal', closestPlayer)
+        TriggerClientEvent('vorp:heal', _source)
     else
         VorpCore.NotifyRightTip(_source, _U('Missing') .. Config.Bandage, 4000)
     end

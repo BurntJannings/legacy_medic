@@ -175,19 +175,34 @@ AddEventHandler('legacy_medic:reviveclosest', function(closestPlayer)
 	DoScreenFadeIn(800)
 end)
 
-RegisterNetEvent('legacy_medic:getclosestplayerbandage', function()
-	local ped = PlayerPedId()
-	local pedcoords = GetEntityCoords(ped)
-	local closestPlayer, closestDistance = GetClosestPlayer()
-	local closestPlayerPed = GetPlayerPed(closestPlayer)
-	local closestPlayerCoords = GetEntityCoords(closestPlayer, true)
+RegisterNetEvent('legacy_medic:getclosestplayerbandage')
+AddEventHandler('legacy_medic:getclosestplayerbandage', function()
+    local ped = PlayerPedId()
+    local pedcoords = GetEntityCoords(ped)
+    local closestPlayer, closestDistance = GetClosestPlayer()
+    local closestPlayerPed = GetPlayerPed(closestPlayer)
+    local closestPlayerCoords = GetEntityCoords(closestPlayer, true)
+    local closestPlayerhealth = GetEntityHealth(closestPlayerPed)
 
-	if closestPlayer ~= -1 and closestDistance <= 3.0 then
-		TriggerServerEvent('legacy_medic:healplayer', GetPlayerServerId(closestPlayer))
-	else
-		TriggerEvent('vorp:heal')
+    --print(closestPlayerhealth)
+
+    if closestPlayerhealth < 150 then -- Check if player's health is under 150
+        if closestPlayer ~= -1 and closestDistance <= 3.0 then
+            TriggerServerEvent('legacy_medic:healplayer', GetPlayerServerId(closestPlayer), closestPlayerhealth)
+        else
+		if Config.playerscantuseband then
+			VORPcore.NotifyRightTip( _U('not_near_player'), 4000)
+		else
+            TriggerServerEvent('legacy_medic:healself')
+    	end
 	end
+    else
+	
+
+        VORPcore.NotifyRightTip( _U('cantheal'), 4000)
+    end
 end)
+
 
 RegisterNetEvent('legacy_medic:sendjob', function(job)
 	Playerjob = job
