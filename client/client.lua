@@ -186,7 +186,7 @@ AddEventHandler('legacy_medic:getclosestplayerbandage', function()
 
     --print(closestPlayerhealth)
 
-    if closestPlayerhealth < 150 then -- Check if player's health is under 150
+    if closestPlayerhealth < 300 then -- Check if player's health is under 150
         if closestPlayer ~= -1 and closestDistance <= 3.0 then
             TriggerServerEvent('legacy_medic:healplayer', GetPlayerServerId(closestPlayer), closestPlayerhealth)
         else
