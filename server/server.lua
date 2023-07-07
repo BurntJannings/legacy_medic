@@ -135,7 +135,7 @@ AddEventHandler('legacy_medic:healplayer', function(closestPlayer, closestPlayer
     local _source = source
     local count = VORPInv.getItemCount(_source, Config.Bandage)
     
-    if closestPlayerhealth < 150 then -- Check if player's health is under 150
+    if closestPlayerhealth < 300 then -- Check if player's health is under 300
         if count > 0 then
             VORPInv.subItem(_source, Config.Bandage, 1)
             TriggerClientEvent('vorp:heal', closestPlayer)
