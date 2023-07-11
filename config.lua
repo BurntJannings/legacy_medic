@@ -10,6 +10,10 @@ Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
 Config.gonegative = true -- Can you go negative paying for NPC revival
 Config.synsociety = false
 Config.playerscantuseband = true -- set false if you want players to use bandages them self 
+
+Config.helthcheck = 300
+
+
 Doctoroffices = {
                 val = {
                 Pos = {x = -288.72, y = 808.83, z = 119.39}, -- location 
