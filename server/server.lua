@@ -10,7 +10,7 @@ end)
 local stafftable = {}
 
 RegisterServerEvent('legacy_medic:checkjob', function()
-    print('working')
+    --print('working')
     local _source = source
     local Character = VorpCore.getUser(_source).getUsedCharacter
     local job = Character.job
