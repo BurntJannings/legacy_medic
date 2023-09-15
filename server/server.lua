@@ -88,9 +88,20 @@ end)
 
 RegisterServerEvent('legacy_medic:takeitem', function(item, number)
     local _source = source
-    VORPInv.addItem(_source, item, number)
-    VorpCore.NotifyRightTip(_source, _U('Received') .. number .. _U('Of') .. item, 4000)
+    local itemname = item
+    local canCarry = exports.vorp_inventory:canCarryItem(_source, itemname, number)
 
+    if not canCarry then
+        TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. number .. " " .. itemname, 4000)
+    else
+        local canCarry2 = exports.vorp_inventory:canCarryItems(_source, itemname, number)
+        if canCarry2 == false then
+            TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. number .. " " .. itemname, 4000)
+        else
+            VORPInv.addItem(_source, itemname, number)
+            VorpCore.NotifyRightTip(_source, _U('Received') .. number .. _U('Of') .. itemname, 4000)
+        end
+    end
 end)
 
 RegisterServerEvent("legacy_medic:reviveplayer")
