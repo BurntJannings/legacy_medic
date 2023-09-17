@@ -2,8 +2,8 @@ Config = {}
 
 Config.Locale = 'en'
 
-Config.Bandage = 'Bandage'  --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
-Config.Revive = 'Morphine' --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
+Config.Bandage = 'bandage'  --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
+Config.Revive = 'syringe' --Can change to an equivalent item in your database or run the items.sql, icon in items folder, remember case sensitive
 Config.usewebhook = false
 Config.Webhook = ''
 Config.Command = 'medic' -- Slash command to use in chat to open Medic Menu
@@ -49,6 +49,6 @@ Config.doctors = {
 
     amount = 45, -- Payment for Revive from NPC Doctor
 
-    timer = 60000 * 1 -- put how many minutes you'd like ie 60000 * 5 for 5 minutes
+    timer = 1000 -- put how many minutes you'd like ie 60000 * 5 for 5 minutes
 	
 }

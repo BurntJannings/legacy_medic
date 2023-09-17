@@ -94,7 +94,7 @@ RegisterServerEvent('legacy_medic:takeitem', function(item, number)
     if not canCarry then
         TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. number .. " " .. itemname, 4000)
     else
-        local canCarry2 = exports.vorp_inventory:canCarryItems(_source, itemname, number)
+        local canCarry2 = exports.vorp_inventory:canCarryItems(_source, number)
         if canCarry2 == false then
             TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. number .. " " .. itemname, 4000)
         else
