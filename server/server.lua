@@ -10,7 +10,7 @@ end)
 local stafftable = {}
 
 RegisterServerEvent('legacy_medic:checkjob', function()
-    print('working')
+    --print('working')
     local _source = source
     local Character = VorpCore.getUser(_source).getUsedCharacter
     local job = Character.job
@@ -36,14 +36,21 @@ end
 RegisterServerEvent("legacy_medicalertjobs", function()
     local _source = source
     local docs = 0
+    local isOnDuty = false
+        
     if Config.synsociety then
-        local isanyon = exports["syn_society"]:GetPlayersOnDuty("doctor")
-        print(json.encode(isanyon))
-        if #isanyon ~= 0 then
-            VorpCore.NotifyRightTip(_source, _U('doctoractive'), 4000)
-        else
-            TriggerClientEvent('legacy_medic:finddoc', _source)
+        for _, job in ipairs(MedicJobs) do
+            local jobOnDuty = exports["syn_society"]:GetPlayersOnDuty(job)
+            if #jobOnDuty ~= 0 then
+                isOnDuty = true
+            end
         end
+        end
+        
+    if isOnDuty then
+        VorpCore.NotifyRightTip(_source, _U("doctoractive"), 20000)
+    elseif isOnDuty == false then
+        TriggerClientEvent('legacy_medic:finddoc', _source)
     else
         for z, m in ipairs(GetPlayers()) do
             local User = VorpCore.getUser(m)
@@ -57,6 +64,7 @@ RegisterServerEvent("legacy_medicalertjobs", function()
         end
     end
 end)
+
 
 
 RegisterServerEvent("legacy_medic:sendPlayers", function(source)
@@ -80,9 +88,21 @@ end)
 
 RegisterServerEvent('legacy_medic:takeitem', function(item, number)
     local _source = source
-    VORPInv.addItem(_source, item, number)
-    VorpCore.NotifyRightTip(_source, _U('Received') .. number .. _U('Of') .. item, 4000)
+    local itemname = item
+    local amount = number
+    local canCarry2 = exports.vorp_inventory:canCarryItems(_source,amount)
+    if canCarry2 == false then
+        TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. amount .. " " .. itemname, 4000)
+    elseif canCarry2 then
 
+        local canCarry = exports.vorp_inventory:canCarryItem(_source,itemname,amount)
+        if canCarry then
+            VORPInv.addItem(_source, itemname, amount)
+            VorpCore.NotifyRightTip(_source, _U('Received') .. amount .. _U('Of') .. itemname, 4000)
+        else
+            TriggerClientEvent("vorp:TipRight", _source, _U('cantcarry') .. amount .. " " .. itemname, 4000)    
+        end
+    end
 end)
 
 RegisterServerEvent("legacy_medic:reviveplayer")

@@ -54,6 +54,8 @@ Locales['en'] = {
     cooldown = "Please wait ",
     Youused ="You used",
     cantheal = "Player's health is not low enought",
+    cantcarry = "You don't have enough space in For ",
+
 
 
 
